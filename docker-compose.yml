@@ -12,6 +12,5 @@ services:
         volumes:
             - "/opt/services/logs/esia:/logs"
         restart: always
-
 networks:
     net:
