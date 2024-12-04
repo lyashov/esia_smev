@@ -1,0 +1,17 @@
+version: '3'
+services:
+    esia-gateway:
+        image: registry:5000/esia
+        container_name: esia
+        ports:
+            - "443:38091"
+        networks:
+            - net
+        deploy:
+            replicas: 2
+        volumes:
+            - "/opt/services/logs/esia:/logs"
+        restart: always
+
+networks:
+    net:

@@ -1,0 +1,58 @@
+security:
+  require-ssl: true
+server:
+  port: 38091
+  ssl:
+    key-store: classpath:security/esia/esia.pfx
+    key-store-password: 12345
+    key-store-type: PKCS12
+
+esia:
+  client_id: id
+  keystore:
+    key:
+      alias: prod_lic
+    password: 12345
+    path: security/esia/temporary.p12
+  oauth2:
+    url: /aas/oauth2/ac
+  response:
+    person: /rs/prns/
+  scope: openid fullname birthdate inn gender snils email contacts id_doc
+  token:
+    url: /aas/oauth2/te
+
+signature:
+  algorithm: GOST3411-2012-256withECGOST3410-2012-256
+  reverse: false
+
+loading:
+  thread:
+    count: 1
+logging:
+  file:
+    max-history: 7
+    max-size: 10000MB
+    name: logs/esia/mdm-esia.log
+spring:
+  profiles:
+    active: '@spring.profiles.active@'
+  datasource:
+    driver-class-name: org.postgresql.Driver
+  flyway:
+    baseline-on-migrate: true
+    baseline-version: 1
+    locations: classpath:sql/migration
+    out-of-order: true
+    schemas: public
+    sql-migration-prefix: ''
+    sql-migration-separator: __
+    table: schema_version
+    validate-on-migrate: false
+  jpa:
+    hibernate:
+      ddl-auto: update
+token:
+  save:
+    default:
+      system: SYSTEM
